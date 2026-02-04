@@ -30,8 +30,7 @@ private:
 
 private slots:
     void createNewTask();
-    
-    
+        
 signals:
 };
 

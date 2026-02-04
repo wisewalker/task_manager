@@ -12,12 +12,14 @@ SOURCES += \
     src/databaseCommunicator.cpp \
     src/globalConstants.cpp \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/welcomePage.cpp
 
 HEADERS += \
     src/databaseCommunicator.h \
     src/globalConstants.h \
-    src/mainwindow.h
+    src/mainwindow.h \
+    src/welcomePage.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "databaseCommunicator.h"
+#include "welcomePage.h"
 
 #include <QApplication>
 #include <QLayout>
@@ -10,15 +11,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow main;
-    
-    DatabaseCommunicator db_communicator;
-    db_communicator.openConnection();
 
-    QTableView* view = new QTableView;
-    view->setModel(db_communicator.model());
-    view->hideColumn(0);
-    main.layout()->addWidget(view);
+    // DatabaseCommunicator db_communicator;
+    // db_communicator.openConnection();
+
+    WelcomePage *wpage = new WelcomePage;
+    wpage->show();
     
-    main.show();
+    //main.show();
     return a.exec();
 }
