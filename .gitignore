@@ -77,4 +77,4 @@ CMakeLists.txt.user*
 
 # Custom
 /other_notes
-src/globalConstants.cpp
+/src/globalConstants.cpp
