@@ -13,12 +13,14 @@ SOURCES += \
     src/globalConstants.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/tasksManagementPage.cpp \
     src/welcomePage.cpp
 
 HEADERS += \
     src/databaseCommunicator.h \
     src/globalConstants.h \
     src/mainwindow.h \
+    src/tasksManagementPage.h \
     src/welcomePage.h
 
 # Default rules for deployment.

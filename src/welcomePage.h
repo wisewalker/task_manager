@@ -22,8 +22,8 @@ private:
     QPushButton *m_createTaskButton = nullptr;
     QPushButton *m_listTasksButton = nullptr;    
     
-    QTableView *m_recentlyCreatedTasks = nullptr;
-    QTableView *m_reachingDeadlineTasks = nullptr;
+    QTableView *m_recentlyCreatedTasksView = nullptr;
+    QTableView *m_reachingDeadlineTasksView = nullptr;
     
 public:
     explicit WelcomePage(QWidget *parent = nullptr);

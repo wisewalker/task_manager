@@ -48,10 +48,10 @@ void WelcomePage::configureStructure()
     recentlyCreatedLabel->setAlignment(Qt::AlignCenter);
     recentlyCreatedLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    m_recentlyCreatedTasks = new QTableView(this);
-    m_recentlyCreatedTasks->setObjectName("recentlyCreatedTasks");
-    m_recentlyCreatedTasks->setColumnHidden(0, true);
-    m_recentlyCreatedTasks->setColumnHidden(3, true);
+    m_recentlyCreatedTasksView = new QTableView(this);
+    m_recentlyCreatedTasksView->setObjectName("recentlyCreatedTasksView");
+    m_recentlyCreatedTasksView->setColumnHidden(0, true);
+    m_recentlyCreatedTasksView->setColumnHidden(3, true);
     
     QLabel *reachingDeadlineLabel = new QLabel;
     reachingDeadlineLabel->setObjectName("reachingDeadlineLabel");
@@ -61,10 +61,10 @@ void WelcomePage::configureStructure()
     reachingDeadlineLabel->setAlignment(Qt::AlignCenter);
     reachingDeadlineLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     
-    m_reachingDeadlineTasks = new QTableView(this);
-    m_reachingDeadlineTasks->setObjectName("reachingDeadlineTasks");
-    m_reachingDeadlineTasks->setColumnHidden(0, true);
-    m_reachingDeadlineTasks->setColumnHidden(3, true);
+    m_reachingDeadlineTasksView = new QTableView(this);
+    m_reachingDeadlineTasksView->setObjectName("reachingDeadlineTasksView");
+    m_reachingDeadlineTasksView->setColumnHidden(0, true);
+    m_reachingDeadlineTasksView->setColumnHidden(3, true);
     
     //Set left layout and fill it with according widgets
     QVBoxLayout *leftVLayout = new QVBoxLayout;
@@ -72,18 +72,13 @@ void WelcomePage::configureStructure()
     leftVLayout->setContentsMargins(20, 0, 20, 0);
     
     leftVLayout->addSpacing(15);
-    leftVLayout->addStretch(0);
-    leftVLayout->addWidget(welcomeSign);
-    leftVLayout->addStretch(2);
-    leftVLayout->addSpacing(30);
-    leftVLayout->addWidget(appSign);
-    leftVLayout->addStretch(0);
-    leftVLayout->addSpacing(30);
-    leftVLayout->addWidget(m_createTaskButton);
-    leftVLayout->addStretch(0);
+    leftVLayout->addWidget(welcomeSign, 1);
     leftVLayout->addSpacing(5);
-    leftVLayout->addStretch(0);
-    leftVLayout->addWidget(m_listTasksButton);
+    leftVLayout->addStretch(2);
+    leftVLayout->addWidget(appSign, 2);
+    leftVLayout->addWidget(m_createTaskButton, 1);
+    leftVLayout->addSpacing(5);
+    leftVLayout->addWidget(m_listTasksButton, 1);
     leftVLayout->addStretch(4);
     
     //Set right layout and fill it with according widgets
@@ -92,28 +87,23 @@ void WelcomePage::configureStructure()
     rightVLayout->setContentsMargins(20, 0, 20, 0);
     
     rightVLayout->addSpacing(15);
-    rightVLayout->addStretch(2);
     rightVLayout->addWidget(recentlyCreatedLabel);
-    rightVLayout->addStretch(0);
     rightVLayout->addSpacing(2);
-    rightVLayout->addWidget(m_recentlyCreatedTasks);
-    rightVLayout->addStretch(1);
+    rightVLayout->addWidget(m_recentlyCreatedTasksView, 1);
     rightVLayout->addSpacing(10);
     rightVLayout->addWidget(reachingDeadlineLabel);
-    rightVLayout->addStretch(0);
     rightVLayout->addSpacing(2);
-    rightVLayout->addWidget(m_reachingDeadlineTasks);
+    rightVLayout->addWidget(m_reachingDeadlineTasksView, 1);
     rightVLayout->addSpacing(10);
-    rightVLayout->addStretch(5);
 
     //Create, configure and fill layout
     m_mainLayout = new QHBoxLayout(this);
     this->setLayout(m_mainLayout);
     
     rightVLayout->addSpacing(1);
-    m_mainLayout->addLayout(leftVLayout);
+    m_mainLayout->addLayout(leftVLayout, 1);
     rightVLayout->addSpacing(2);
-    m_mainLayout->addLayout(rightVLayout);
+    m_mainLayout->addLayout(rightVLayout, 5);
     
 }
 

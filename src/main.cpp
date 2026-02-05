@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "databaseCommunicator.h"
 #include "welcomePage.h"
+#include "tasksManagementPage.h"
+
 
 #include <QApplication>
 #include <QLayout>
@@ -10,14 +12,11 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MainWindow main;
+    MainWindow mainWindow;
 
     // DatabaseCommunicator db_communicator;
     // db_communicator.openConnection();
 
-    WelcomePage *wpage = new WelcomePage;
-    wpage->show();
-    
-    //main.show();
+    mainWindow.show();
     return a.exec();
 }
