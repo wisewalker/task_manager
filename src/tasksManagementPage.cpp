@@ -1,14 +1,36 @@
 #include "tasksManagementPage.h"
 
-TasksManagementPage::TasksManagementPage(QWidget *parent)
-    : QWidget{parent}
+TasksManagementPage::TasksManagementPage(QWidget *parent, QSqlTableModel *model)
+    : QWidget{parent}, m_model{model}
 {
     this->setObjectName("tasksManagementPage");
 
     configureStructure();
     configureStyle();
+    configureFunctionality();
 }
 
+QPushButton *TasksManagementPage::createTaskButton() const
+{
+    return m_createTaskButton;
+}
+
+QPushButton *TasksManagementPage::backHomeButton() const
+{
+    return m_backHomeButton;
+}
+
+void TasksManagementPage::setModel(QSqlTableModel *model)
+{
+    if (!m_model) {
+        qDebug() << "[!]Model is already set!";
+    }
+    else{
+        m_model = model;
+        qDebug() << "[!]Model is successfully set!";                    
+    }
+    
+}
 
 void TasksManagementPage::configureStructure()
 {
@@ -72,5 +94,10 @@ void TasksManagementPage::configureStyle()
 
 void TasksManagementPage::configureFunctionality()
 {
+    if (!m_model) {
+        qDebug() << "[!]Missing model component!";
+    } else {
+        m_assignedTasksView->setModel(m_model);
+    }
     
 }

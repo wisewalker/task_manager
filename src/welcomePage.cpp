@@ -1,12 +1,33 @@
 #include "welcomePage.h"
 
-WelcomePage::WelcomePage(QWidget *parent)
-    : QWidget{parent}
+WelcomePage::WelcomePage(QWidget *parent, QSqlTableModel *model)
+    : QWidget{parent}, m_sourceModel{model}
 {
     this->setObjectName("welcomePage");
 
     configureStructure();
     configureStyle();
+    configureFunctionality();
+}
+
+QPushButton *WelcomePage::createTaskButton() const
+{
+    return m_createTaskButton;
+}
+
+QPushButton *WelcomePage::listTasksButton() const
+{
+    return m_listTasksButton;
+}
+
+void WelcomePage::setModel(QSqlTableModel *model)
+{
+    if (!m_sourceModel) {
+        qDebug() << "[!]Model is already set!";
+    } else {
+        m_sourceModel = model;
+        qDebug() << "[!]Model is successfully set!";
+    }
 }
 
 void WelcomePage::configureStructure()
@@ -114,5 +135,25 @@ void WelcomePage::configureStyle()
 
 void WelcomePage::configureFunctionality()
 {
+    //Define medium models (which contents will be based on source model) 
+    m_recentlyCreatedTasksModel = new LimitedProxyModel(this, topRecentlyCreated_Number);
+    m_recentlyCreatedTasksModel->setObjectName("recentlyCreatedTasksMediumModel");
+    m_reachingDeadlineTasksModel = new LimitedProxyModel(this, topReachingDeadline_Number);
+    m_reachingDeadlineTasksModel->setObjectName("reachingDeadlineTasksMediumModel");
     
+    //Forbid editing tasks from welcome page (read-only mode)
+    m_recentlyCreatedTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_reachingDeadlineTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    
+    if (!m_sourceModel) {
+        qDebug() << "[!]Missing model component!";
+    } else {
+        m_recentlyCreatedTasksModel->setSourceModel(m_sourceModel);
+        m_recentlyCreatedTasksModel->sort(2, Qt::DescendingOrder);
+        m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
+        
+        m_reachingDeadlineTasksModel->setSourceModel(m_sourceModel);
+        m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
+        m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
+    }    
 }

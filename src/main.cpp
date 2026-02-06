@@ -3,6 +3,7 @@
 #include "welcomePage.h"
 #include "tasksManagementPage.h"
 
+#include "limitedProxyModel.h"
 
 #include <QApplication>
 #include <QLayout>

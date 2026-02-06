@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <QDebug>
+
 #include <QPushButton>
 #include <QLabel>
 
@@ -11,6 +13,8 @@
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+
+#include <QSqlTableModel>
 
 class TasksManagementPage : public QWidget
 {
@@ -24,8 +28,15 @@ private:
     
     QTableView *m_assignedTasksView = nullptr;
     
+    QSqlTableModel *m_model = nullptr;
+    
 public:
-    explicit TasksManagementPage(QWidget *parent = nullptr);
+    explicit TasksManagementPage(QWidget *parent = nullptr, QSqlTableModel *model = nullptr);
+    
+    QPushButton *createTaskButton() const;
+    QPushButton *backHomeButton() const;
+    
+    void setModel(QSqlTableModel *model);
     
 private:
     void configureStyle();

@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     src/databaseCommunicator.cpp \
     src/globalConstants.cpp \
+    src/limitedProxyModel.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/tasksManagementPage.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     src/databaseCommunicator.h \
     src/globalConstants.h \
+    src/limitedProxyModel.h \
     src/mainwindow.h \
     src/tasksManagementPage.h \
     src/welcomePage.h
