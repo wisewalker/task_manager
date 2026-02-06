@@ -11,10 +11,14 @@
 #include <QTableView>
 #include <QListView>
 
+#include <QHeaderView>
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
 #include <QSqlTableModel>
+
+#include <QSortFilterProxyModel>
 
 class TasksManagementPage : public QWidget
 {
@@ -27,8 +31,10 @@ private:
     QPushButton *m_createTaskButton = nullptr;    
     
     QTableView *m_assignedTasksView = nullptr;
-    
-    QSqlTableModel *m_model = nullptr;
+
+    QSqlTableModel *m_Sourcemodel = nullptr;
+
+    QSortFilterProxyModel *m_assignedTasksModel = nullptr;
     
 public:
     explicit TasksManagementPage(QWidget *parent = nullptr, QSqlTableModel *model = nullptr);

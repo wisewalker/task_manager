@@ -5,6 +5,10 @@
 
 #include <QMainWindow>
 
+#include <QDesktopWidget>
+
+#include <QSize>
+
 #include <QPushButton>
 
 #include "welcomePage.h"
@@ -21,6 +25,8 @@ private:
     WelcomePage *m_welcomePage = nullptr;
     TasksManagementPage *m_tasksPage = nullptr;
     DatabaseCommunicator *m_db_communicator = nullptr;
+
+    const QSize defaultSize = QSize(720, 480);
     
 public:
     MainWindow(QWidget *parent = nullptr);

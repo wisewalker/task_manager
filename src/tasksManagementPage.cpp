@@ -1,7 +1,7 @@
 #include "tasksManagementPage.h"
 
 TasksManagementPage::TasksManagementPage(QWidget *parent, QSqlTableModel *model)
-    : QWidget{parent}, m_model{model}
+    : QWidget{parent}, m_Sourcemodel{model}
 {
     this->setObjectName("tasksManagementPage");
 
@@ -22,11 +22,11 @@ QPushButton *TasksManagementPage::backHomeButton() const
 
 void TasksManagementPage::setModel(QSqlTableModel *model)
 {
-    if (!m_model) {
+    if (!m_Sourcemodel) {
         qDebug() << "[!]Model is already set!";
     }
     else{
-        m_model = model;
+        m_Sourcemodel = model;
         qDebug() << "[!]Model is successfully set!";                    
     }
     
@@ -57,8 +57,6 @@ void TasksManagementPage::configureStructure()
     m_assignedTasksView = new QTableView(this);
     m_assignedTasksView->setObjectName("assignedTasksView");
     m_assignedTasksView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_assignedTasksView->setColumnHidden(0, true);
-    m_assignedTasksView->setColumnHidden(3, true);
     
     //Set left layout and fill it with according widgets
     QHBoxLayout *bottomLayout = new QHBoxLayout;
@@ -94,10 +92,18 @@ void TasksManagementPage::configureStyle()
 
 void TasksManagementPage::configureFunctionality()
 {
-    if (!m_model) {
+    if (!m_Sourcemodel) {
         qDebug() << "[!]Missing model component!";
     } else {
-        m_assignedTasksView->setModel(m_model);
+        m_assignedTasksModel = new QSortFilterProxyModel(this);
+        m_assignedTasksModel->setSourceModel(m_Sourcemodel);
+        m_assignedTasksModel->sort(2, Qt::AscendingOrder);
+        
+        m_assignedTasksView->setModel(m_assignedTasksModel);
+        
+        m_assignedTasksView->setColumnHidden(0, true);
+        m_assignedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        m_assignedTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        m_assignedTasksView->verticalHeader()->hide();
     }
-    
 }

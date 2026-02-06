@@ -95,6 +95,11 @@ void DatabaseCommunicator::openConnection()
     m_tableModel->setTable("tasks");
     m_tableModel->setEditStrategy(QSqlTableModel::OnRowChange);
     m_tableModel->select();
+    
+    m_tableModel->setHeaderData(0, Qt::Horizontal, "ID");
+    m_tableModel->setHeaderData(1, Qt::Horizontal, "Task");
+    m_tableModel->setHeaderData(2, Qt::Horizontal, "Created");
+    m_tableModel->setHeaderData(3, Qt::Horizontal, "Deadline");
 }
 
 void DatabaseCommunicator::createNewTask()

@@ -13,6 +13,8 @@
 #include <QTableView>
 #include <QListView>
 
+#include <QHeaderView>
+
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 

@@ -71,8 +71,6 @@ void WelcomePage::configureStructure()
 
     m_recentlyCreatedTasksView = new QTableView(this);
     m_recentlyCreatedTasksView->setObjectName("recentlyCreatedTasksView");
-    m_recentlyCreatedTasksView->setColumnHidden(0, true);
-    m_recentlyCreatedTasksView->setColumnHidden(3, true);
     
     QLabel *reachingDeadlineLabel = new QLabel;
     reachingDeadlineLabel->setObjectName("reachingDeadlineLabel");
@@ -84,8 +82,6 @@ void WelcomePage::configureStructure()
     
     m_reachingDeadlineTasksView = new QTableView(this);
     m_reachingDeadlineTasksView->setObjectName("reachingDeadlineTasksView");
-    m_reachingDeadlineTasksView->setColumnHidden(0, true);
-    m_reachingDeadlineTasksView->setColumnHidden(3, true);
     
     //Set left layout and fill it with according widgets
     QVBoxLayout *leftVLayout = new QVBoxLayout;
@@ -148,12 +144,30 @@ void WelcomePage::configureFunctionality()
     if (!m_sourceModel) {
         qDebug() << "[!]Missing model component!";
     } else {
+        //Configure view of recently created tasks
         m_recentlyCreatedTasksModel->setSourceModel(m_sourceModel);
         m_recentlyCreatedTasksModel->sort(2, Qt::DescendingOrder);
-        m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
         
+        m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
+
+        m_recentlyCreatedTasksView->setColumnHidden(0, true);
+        m_recentlyCreatedTasksView->setColumnHidden(3, true);
+
+        m_recentlyCreatedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        m_recentlyCreatedTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        m_recentlyCreatedTasksView->verticalHeader()->hide();
+        
+        //Configure view of reaching deadline tasks
         m_reachingDeadlineTasksModel->setSourceModel(m_sourceModel);
         m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
+        
         m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
+        
+        m_reachingDeadlineTasksView->setColumnHidden(0, true);
+        m_reachingDeadlineTasksView->setColumnHidden(2, true);
+        
+        m_reachingDeadlineTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        m_reachingDeadlineTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        m_reachingDeadlineTasksView->verticalHeader()->hide();
     }    
 }

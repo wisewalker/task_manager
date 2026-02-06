@@ -4,7 +4,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setObjectName("mainWindow");
-
+    //Cover 65% of desktop space
+    this->resize(QDesktopWidget().availableGeometry(this).size() * 0.65);
+    
     m_db_communicator = new DatabaseCommunicator(this);
     m_db_communicator->setObjectName("db_communicator");
     m_db_communicator->openConnection();
