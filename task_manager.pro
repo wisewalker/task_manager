@@ -9,23 +9,30 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/databaseCommunicator.cpp \
+    src/Database/databaseCommunicator.cpp \
     src/globalConstants.cpp \
-    src/limitedProxyModel.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp \
-    src/taskForm.cpp \
-    src/tasksManagementPage.cpp \
-    src/welcomePage.cpp
+    src/MainWindowPages/limitedProxyModel.cpp \
+    src/App/main.cpp \
+    src/AppMainWindow/mainwindow.cpp \
+    src/TaskForm/taskForm.cpp \
+    src/MainWindowPages/tasksManagementPage.cpp \
+    src/MainWindowPages/welcomePage.cpp
 
 HEADERS += \
-    src/databaseCommunicator.h \
-    src/globalConstants.h \
-    src/limitedProxyModel.h \
-    src/mainwindow.h \
-    src/taskForm.h \
-    src/tasksManagementPage.h \
-    src/welcomePage.h
+    src/Database/databaseCommunicator.h \
+    src/App/globalConstants.h \
+    src/MainWindowPages/limitedProxyModel.h \
+    src/AppMainWindow/mainwindow.h \
+    src/TaskForm/taskForm.h \
+    src/MainWindowPages/tasksManagementPage.h \
+    src/MainWindowPages/welcomePage.h
+
+INCLUDEPATH += \
+    src/Database/ \
+    src/App/ \ 
+    src/MainWindowPages/ \ 
+    src/AppMainWindow/ \ 
+    src/TaskForm/ \ 
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
