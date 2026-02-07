@@ -10,16 +10,6 @@ WelcomePage::WelcomePage(QWidget *parent, QSqlTableModel *model)
     configureFunctionality();
 }
 
-QPushButton *WelcomePage::createTaskButton() const
-{
-    return m_createTaskButton;
-}
-
-QPushButton *WelcomePage::listTasksButton() const
-{
-    return m_listTasksButton;
-}
-
 void WelcomePage::setModel(QSqlTableModel *model)
 {
     if (!m_sourceModel) {
@@ -131,6 +121,11 @@ void WelcomePage::configureStyle()
 
 void WelcomePage::configureFunctionality()
 {
+    if (!m_sourceModel) {
+        qDebug() << "[!]Missing model component!";
+        return;
+    }
+    
     //Define medium models (which contents will be based on source model) 
     m_recentlyCreatedTasksModel = new LimitedProxyModel(this, topRecentlyCreated_Number);
     m_recentlyCreatedTasksModel->setObjectName("recentlyCreatedTasksMediumModel");
@@ -141,33 +136,49 @@ void WelcomePage::configureFunctionality()
     m_recentlyCreatedTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_reachingDeadlineTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     
-    if (!m_sourceModel) {
-        qDebug() << "[!]Missing model component!";
-    } else {
-        //Configure view of recently created tasks
-        m_recentlyCreatedTasksModel->setSourceModel(m_sourceModel);
-        m_recentlyCreatedTasksModel->sort(2, Qt::DescendingOrder);
-        
-        m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
+    //Configure view of recently created tasks
+    m_recentlyCreatedTasksModel->setSourceModel(m_sourceModel);
+    m_recentlyCreatedTasksModel->sort(2, Qt::DescendingOrder);
+    
+    m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
 
-        m_recentlyCreatedTasksView->setColumnHidden(0, true);
-        m_recentlyCreatedTasksView->setColumnHidden(3, true);
+    m_recentlyCreatedTasksView->setColumnHidden(0, true);
+    m_recentlyCreatedTasksView->setColumnHidden(3, true);
 
-        m_recentlyCreatedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        m_recentlyCreatedTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        m_recentlyCreatedTasksView->verticalHeader()->hide();
-        
-        //Configure view of reaching deadline tasks
-        m_reachingDeadlineTasksModel->setSourceModel(m_sourceModel);
-        m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
-        
-        m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
-        
-        m_reachingDeadlineTasksView->setColumnHidden(0, true);
-        m_reachingDeadlineTasksView->setColumnHidden(2, true);
-        
-        m_reachingDeadlineTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-        m_reachingDeadlineTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-        m_reachingDeadlineTasksView->verticalHeader()->hide();
-    }    
+    m_recentlyCreatedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_recentlyCreatedTasksView->verticalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents);
+    m_recentlyCreatedTasksView->verticalHeader()->hide();
+
+    //Configure view of reaching deadline tasks
+    m_reachingDeadlineTasksModel->setSourceModel(m_sourceModel);
+    m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
+
+    m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
+
+    m_reachingDeadlineTasksView->setColumnHidden(0, true);
+    m_reachingDeadlineTasksView->setColumnHidden(2, true);
+
+    m_reachingDeadlineTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_reachingDeadlineTasksView->verticalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents);
+    m_reachingDeadlineTasksView->verticalHeader()->hide();
+
+    //Connect inner buttons signals for public use
+    QObject::connect(m_createTaskButton,
+                     &QPushButton::clicked,
+                     this,
+                     &WelcomePage::createTaskButtonClicked);
+    
+    QObject::connect(m_listTasksButton,
+                     &QPushButton::clicked,
+                     this,
+                     &WelcomePage::listTasksButtonClicked);
+}
+
+void WelcomePage::onUpdateViews()
+{
+    qDebug() << "[!]Welcome page views are updated!";
+    m_recentlyCreatedTasksView->scrollToTop();
+    m_reachingDeadlineTasksView->scrollToTop();
 }

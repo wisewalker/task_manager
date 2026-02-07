@@ -44,17 +44,20 @@ private:
 public:
     explicit WelcomePage(QWidget *parent = nullptr, QSqlTableModel *model = nullptr);
 
-    QPushButton *createTaskButton() const;
-    QPushButton *listTasksButton() const;
-
     void setModel(QSqlTableModel *model);
 
 private:
     void configureStyle();
     void configureStructure();
     void configureFunctionality();
-
+    
+public slots:
+    void onUpdateViews();
+    
 signals:
+    void createTaskButtonClicked(bool);
+    void listTasksButtonClicked(bool);
+    
 };
 
 #endif // WELCOMEPAGE_H

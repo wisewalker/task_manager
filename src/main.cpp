@@ -5,6 +5,8 @@
 
 #include "limitedProxyModel.h"
 
+#include "taskForm.h"
+
 #include <QApplication>
 #include <QLayout>
 #include <QTableView>
@@ -14,9 +16,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     MainWindow mainWindow;
-
-    // DatabaseCommunicator db_communicator;
-    // db_communicator.openConnection();
 
     mainWindow.show();
     return a.exec();

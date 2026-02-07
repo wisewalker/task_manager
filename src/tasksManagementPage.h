@@ -5,6 +5,10 @@
 
 #include <QDebug>
 
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QDateTimeEdit>
+
 #include <QPushButton>
 #include <QLabel>
 
@@ -19,6 +23,10 @@
 #include <QSqlTableModel>
 
 #include <QSortFilterProxyModel>
+
+#include <QDataWidgetMapper>
+
+#include <QDialog>
 
 class TasksManagementPage : public QWidget
 {
@@ -35,21 +43,26 @@ private:
     QSqlTableModel *m_Sourcemodel = nullptr;
 
     QSortFilterProxyModel *m_assignedTasksModel = nullptr;
+
+    QDataWidgetMapper *m_mapper = nullptr;
     
 public:
     explicit TasksManagementPage(QWidget *parent = nullptr, QSqlTableModel *model = nullptr);
-    
-    QPushButton *createTaskButton() const;
-    QPushButton *backHomeButton() const;
-    
+
     void setModel(QSqlTableModel *model);
     
 private:
     void configureStyle();
     void configureStructure();
     void configureFunctionality();
+
+public slots:
+    void onUpdateView();
     
 signals:
+    void createTaskButtonClicked(bool);
+    void backHomeButtonClicked(bool);
+    
 };
 
 #endif // TASKSMANAGEMENTPAGE_H

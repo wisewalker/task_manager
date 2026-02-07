@@ -8,6 +8,8 @@
 
 #include <QDateTime>
 
+#include <QString>
+
 #include "databaseCommunicator.h"
 #include "globalConstants.h"
 
@@ -29,7 +31,7 @@ DatabaseCommunicator::DatabaseCommunicator(QObject *parent)
 void DatabaseCommunicator::prepareTable()
 {
     QSqlQuery query(m_databaseConnection);
-    //id of task will auto-generated
+    //id of task will be auto-generated
     query.exec("CREATE TABLE IF NOT EXISTS tasks ("
                 "id SERIAL NOT NULL PRIMARY KEY,"
                 "task_contents jsonb NOT NULL,"
@@ -102,7 +104,36 @@ void DatabaseCommunicator::openConnection()
     m_tableModel->setHeaderData(3, Qt::Horizontal, "Deadline");
 }
 
-void DatabaseCommunicator::createNewTask()
+void DatabaseCommunicator::onCreateNewTask(QString title, QString description, QString deadline)
 {
+    qDebug() << "[!]New task form entered data is received in DB!";
+    qDebug() << "Title: " << title;
+    qDebug() << "Description: " << description;
+    qDebug() << "Deadline: " << deadline;
+
+    QSqlQuery query(m_databaseConnection);
+    query.prepare("INSERT INTO tasks (id, task_contents, creation_date, deadline_date) VALUES "
+                  "(DEFAULT, :task_contents, CURRENT_TIMESTAMP, :deadline_date);");
+
+    QJsonObject task_contents;
+    task_contents["title"] = title;
+    task_contents["description"] = description;
+    QJsonDocument doc(task_contents);
+    QString jsonString = doc.toJson(QJsonDocument::Compact);
+    query.bindValue(":task_contents", jsonString);
+
+    query.bindValue(":deadline_date", deadline);
+
+    query.exec();
+    if (query.isActive()) {
+        qDebug() << "[!]New task form data was successfully saved in DB!";
+    } else {
+        qDebug() << query.lastError();
+        return;
+    }
     
+    //Refresh source model
+    m_tableModel->select();
+    //Notify about applied changes
+    emit recordSavedInDatabase();
 }

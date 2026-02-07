@@ -14,6 +14,7 @@ SOURCES += \
     src/limitedProxyModel.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/taskForm.cpp \
     src/tasksManagementPage.cpp \
     src/welcomePage.cpp
 
@@ -22,6 +23,7 @@ HEADERS += \
     src/globalConstants.h \
     src/limitedProxyModel.h \
     src/mainwindow.h \
+    src/taskForm.h \
     src/tasksManagementPage.h \
     src/welcomePage.h
 

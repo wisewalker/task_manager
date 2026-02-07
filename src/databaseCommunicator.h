@@ -5,6 +5,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include <QSqlRecord>
 
 #include <QErrorMessage>
 
@@ -28,10 +29,11 @@ private:
     void prepareTable();
     void createDefaultTask();
 
-private slots:
-    void createNewTask();
+public slots:
+    void onCreateNewTask(QString title, QString description, QString deadline);
         
 signals:
+    void recordSavedInDatabase();
 };
 
 #endif // DATABASECOMMUNICATOR_H

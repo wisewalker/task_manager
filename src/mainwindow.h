@@ -14,6 +14,7 @@
 #include "welcomePage.h"
 #include "tasksManagementPage.h"
 #include "databaseCommunicator.h"
+#include "taskForm.h"
 
 class MainWindow : public QMainWindow
 {
@@ -26,12 +27,11 @@ private:
     TasksManagementPage *m_tasksPage = nullptr;
     DatabaseCommunicator *m_db_communicator = nullptr;
 
-    const QSize defaultSize = QSize(720, 480);
+    TaskForm *m_newTaskForm = nullptr;
     
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 
 private:
     void configureInterfaceStructure();

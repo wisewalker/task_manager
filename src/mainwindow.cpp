@@ -22,6 +22,7 @@ void MainWindow::configureInterfaceStructure()
 
     m_welcomePage = new WelcomePage(m_tabs, m_db_communicator->model());
     m_tasksPage = new TasksManagementPage(m_tabs, m_db_communicator->model());
+    m_newTaskForm = new TaskForm(this);
 
     m_tabs->addTab(m_welcomePage, "Home");
     m_tabs->addTab(m_tasksPage, "Tasks");
@@ -36,44 +37,63 @@ void MainWindow::configureInterfaceStyle()
 
 void MainWindow::onCreateNewTask(bool)
 {
-    qDebug() << "New task has been created!\n";
+    qDebug() << "[!]New task form is opened!";
+    m_newTaskForm->open();
 }
 
 void MainWindow::onMoveToTasksPage(bool)
 {
-    qDebug() << "Moved to tasks management page!\n";
+    qDebug() << "[!]Moved to tasks management page!";
     m_tabs->setCurrentWidget(m_tasksPage);
 }
 
 void MainWindow::onMoveToWelcomePage(bool)
 {
-    qDebug() << "Moved to welcome page!\n";
+    qDebug() << "[!]Moved to welcome page!";
     m_tabs->setCurrentWidget(m_welcomePage);
 }
 
 void MainWindow::configureFunctionality()
 {
     //Set connections for welcome page
-    QObject::connect(m_welcomePage->createTaskButton(),
-                     &QPushButton::clicked,
+    QObject::connect(m_welcomePage,
+                     &WelcomePage::createTaskButtonClicked,
                      this,
                      &MainWindow::onCreateNewTask);
-
-    QObject::connect(m_welcomePage->listTasksButton(),
-                     &QPushButton::clicked,
+    
+    QObject::connect(m_welcomePage,
+                     &WelcomePage::listTasksButtonClicked,
                      this,
                      &MainWindow::onMoveToTasksPage);
-
+    
     //Set connections for tasks management page
-    QObject::connect(m_tasksPage->createTaskButton(),
-                     &QPushButton::clicked,
+    QObject::connect(m_tasksPage,
+                     &TasksManagementPage::createTaskButtonClicked,
                      this,
                      &MainWindow::onCreateNewTask);
 
-    QObject::connect(m_tasksPage->backHomeButton(),
-                     &QPushButton::clicked,
+    QObject::connect(m_tasksPage,
+                     &TasksManagementPage::backHomeButtonClicked,
                      this,
                      &MainWindow::onMoveToWelcomePage);
+    
+    //Set connection for task form dialog window
+    QObject::connect(m_newTaskForm,
+                     &TaskForm::taskFormApplied,
+                     m_db_communicator,
+                     &DatabaseCommunicator::onCreateNewTask);
+
+    //Set connection to react for DB change
+    QObject::connect(m_db_communicator,
+                     &DatabaseCommunicator::recordSavedInDatabase,
+                     m_tasksPage,
+                     &TasksManagementPage::onUpdateView);
+    
+    QObject::connect(m_db_communicator,
+                     &DatabaseCommunicator::recordSavedInDatabase,
+                     m_welcomePage,
+                     &WelcomePage::onUpdateViews);
+    
 }
 
 MainWindow::~MainWindow()
