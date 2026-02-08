@@ -141,10 +141,11 @@ void WelcomePage::configureFunctionality()
     m_recentlyCreatedTasksModel->sort(2, Qt::DescendingOrder);
     
     m_recentlyCreatedTasksView->setModel(m_recentlyCreatedTasksModel);
+    m_recentlyCreatedTasksView->setItemDelegate(new TasksTableDelegate(this));
 
     m_recentlyCreatedTasksView->setColumnHidden(0, true);
     m_recentlyCreatedTasksView->setColumnHidden(3, true);
-
+    
     m_recentlyCreatedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     m_recentlyCreatedTasksView->verticalHeader()->setSectionResizeMode(
         QHeaderView::ResizeToContents);
@@ -155,6 +156,7 @@ void WelcomePage::configureFunctionality()
     m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
 
     m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
+    m_reachingDeadlineTasksView->setItemDelegate(new TasksTableDelegate(this));
 
     m_reachingDeadlineTasksView->setColumnHidden(0, true);
     m_reachingDeadlineTasksView->setColumnHidden(2, true);

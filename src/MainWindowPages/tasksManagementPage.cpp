@@ -1,4 +1,6 @@
 #include "tasksManagementPage.h"
+#include "tasksTableDelegate.h"
+
 
 TasksManagementPage::TasksManagementPage(QWidget *parent, QSqlTableModel *model)
     : QWidget{parent}
@@ -46,6 +48,8 @@ void TasksManagementPage::configureStructure()
 
     m_assignedTasksView = new QTableView(this);
     m_assignedTasksView->setObjectName("assignedTasksView");
+    TasksTableDelegate *delegate = new TasksTableDelegate(this);
+    m_assignedTasksView->setItemDelegate(delegate);
     m_assignedTasksView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     //Set left layout and fill it with according widgets
@@ -73,6 +77,9 @@ void TasksManagementPage::configureStructure()
     m_mainLayout->addSpacing(10);
     m_mainLayout->addLayout(bottomLayout, 1);
     m_mainLayout->addStretch(1);
+
+    //Create tasks observer window
+    m_tasksObserver = new TasksObserver(this);
 }
 
 void TasksManagementPage::configureStyle() {}
@@ -86,10 +93,9 @@ void TasksManagementPage::configureFunctionality()
     
     m_assignedTasksModel = new QSortFilterProxyModel(this);
     m_assignedTasksModel->setSourceModel(m_Sourcemodel);
-    m_assignedTasksModel->sort(2, Qt::AscendingOrder);
 
     m_assignedTasksView->setModel(m_assignedTasksModel);
-
+    m_assignedTasksView->setSortingEnabled(true);
     m_assignedTasksView->setColumnHidden(0, true);
     m_assignedTasksView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     m_assignedTasksView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -105,10 +111,61 @@ void TasksManagementPage::configureFunctionality()
                      &QPushButton::clicked,
                      this,
                      &TasksManagementPage::backHomeButtonClicked);
+    
+    
+    //Configure connections for tasks view and applied tasks observer dialog window
+    m_assignedTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_assignedTasksView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    QObject::connect(m_assignedTasksView,
+                     &QTableView::doubleClicked,
+                     this,
+                     &TasksManagementPage::onInteractViewItem);
+
+    QObject::connect(m_tasksObserver,
+                     &TasksObserver::deleteButtonClicked,
+                     this,
+                     &TasksManagementPage::onDeleteViewItem);
+ 
+}
+
+void TasksManagementPage::onDeleteViewItem()
+{
+    qDebug() << "[!]Request for task deletion was sent!";
+    int taskID = m_assignedTasksView->currentIndex().siblingAtColumn(0).data().toInt();
+
+    emit taskDeletionRequested(taskID);
+
+    m_tasksObserver->close();
 }
 
 void TasksManagementPage::onUpdateView()
 {
     qDebug() << "[!]Tasks management page view is updated!";
     m_assignedTasksView->scrollToTop();
+}
+
+void TasksManagementPage::onInteractViewItem(const QModelIndex &index)
+{
+    if (!index.isValid())
+        return;
+
+    //Retreive current task data
+    QString taskContents = index.siblingAtColumn(1).data().toString();
+    QString deadlineDate = index.siblingAtColumn(2).data().toDateTime().toString();
+    QString creationDate = index.siblingAtColumn(3).data().toDateTime().toString();
+
+    m_tasksObserver->setData(taskContents, deadlineDate, creationDate);
+    
+    if (m_tasksObserver->exec() == QDialog::Accepted) {
+        QString updatedTitle = m_tasksObserver->getTitle();
+        QString updatedDescription = m_tasksObserver->getDescription();
+        QString updatedDeadlineDate = m_tasksObserver->getDeadlineDate();
+        
+        qDebug() << "Title: " << updatedTitle;
+        qDebug() << "Description: " << updatedDescription;
+        qDebug() << "Deadline: " << updatedDeadlineDate;
+        qDebug() << "Creation date: " << creationDate;
+        
+        emit taskFieldsUpdated(index.siblingAtColumn(0).data().toInt(), updatedTitle, updatedDescription, updatedDeadlineDate);
+    }
 }

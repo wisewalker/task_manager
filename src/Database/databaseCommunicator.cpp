@@ -135,5 +135,69 @@ void DatabaseCommunicator::onCreateNewTask(QString title, QString description, Q
     //Refresh source model
     m_tableModel->select();
     //Notify about applied changes
-    emit recordSavedInDatabase();
+    emit databaseContentsChanged();
+}
+
+void DatabaseCommunicator::onUpdateTask(int id, QString title, QString description, QString deadline)
+{
+    qDebug() << "[!]Udpated data for existing task is received in DB!";
+    qDebug() << "ID: " << id;
+    qDebug() << "Title: " << title;
+    qDebug() << "Description: " << description;
+    qDebug() << "Deadline: " << deadline;
+    
+    QSqlQuery query(m_databaseConnection);
+    query.prepare("UPDATE tasks "
+                  "SET task_contents = :task_contents, "
+                  "deadline_date = :deadline_date "
+                  "WHERE id = :id;");
+    
+    query.bindValue(":id", id);
+    
+    QJsonObject task_contents;
+    task_contents["title"] = title;
+    task_contents["description"] = description;
+    QJsonDocument doc(task_contents);
+    QString jsonString = doc.toJson(QJsonDocument::Compact);
+    query.bindValue(":task_contents", jsonString);
+    
+    query.bindValue(":deadline_date", deadline);
+    
+    query.exec();
+    if (query.isActive()) {
+        qDebug() << "[!]Updated task data was successfully saved in DB!";
+    } else {
+        qDebug() << query.lastError();
+        return;
+    }
+    
+    //Refresh source model
+    m_tableModel->select();
+    //Notify about applied changes
+    emit databaseContentsChanged();
+}
+
+void DatabaseCommunicator::onDeleteTask(int id)
+{
+    qDebug() << "[!]Request for task data deletion is received in DB!";
+    qDebug() << "ID: " << id;
+    
+    QSqlQuery query(m_databaseConnection);
+    query.prepare("DELETE FROM tasks "
+                  "WHERE id = :id;");
+    
+    query.bindValue(":id", id);
+    
+    query.exec();
+    if (query.isActive()) {
+        qDebug() << "[!]Task data was successfully deleted from DB!";
+    } else {
+        qDebug() << query.lastError();
+        return;
+    }
+    
+    //Refresh source model
+    m_tableModel->select();
+    //Notify about applied changes
+    emit databaseContentsChanged();
 }

@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QLineEdit>
 #include <QDateTimeEdit>
 
@@ -28,6 +29,8 @@
 
 #include <QDialog>
 
+#include "tasksObserver.h"
+
 class TasksManagementPage : public QWidget
 {
     Q_OBJECT
@@ -44,7 +47,17 @@ private:
 
     QSortFilterProxyModel *m_assignedTasksModel = nullptr;
 
-    QDataWidgetMapper *m_mapper = nullptr;
+    QDialog *m_viewItemsObserver = nullptr;
+    QPlainTextEdit *task_edit;
+    QDateTimeEdit *creationDate_edit;
+    QDateTimeEdit *deadlineDate_edit;
+    
+    QPushButton *apply_button;
+    QPushButton *cancel_button;
+    QPushButton *next_button;
+    QPushButton *previous_button;
+    
+    TasksObserver *m_tasksObserver = nullptr;
     
 public:
     explicit TasksManagementPage(QWidget *parent = nullptr, QSqlTableModel *model = nullptr);
@@ -58,11 +71,14 @@ private:
 
 public slots:
     void onUpdateView();
+    void onInteractViewItem(const QModelIndex&);
+    void onDeleteViewItem();
     
 signals:
     void createTaskButtonClicked(bool);
     void backHomeButtonClicked(bool);
-    
+    void taskFieldsUpdated(int id, QString title, QString description, QString deadline);
+    void taskDeletionRequested(int id);
 };
 
 #endif // TASKSMANAGEMENTPAGE_H

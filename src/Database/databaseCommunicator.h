@@ -7,6 +7,8 @@
 #include <QSqlTableModel>
 #include <QSqlRecord>
 
+#include <QModelIndex>
+
 #include <QErrorMessage>
 
 class DatabaseCommunicator : public QObject
@@ -31,9 +33,11 @@ private:
 
 public slots:
     void onCreateNewTask(QString title, QString description, QString deadline);
+    void onUpdateTask(int id, QString title, QString description, QString deadline);
+    void onDeleteTask(int id);
         
 signals:
-    void recordSavedInDatabase();
+    void databaseContentsChanged();
 };
 
 #endif // DATABASECOMMUNICATOR_H

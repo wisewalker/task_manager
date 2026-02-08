@@ -5,7 +5,6 @@ TaskForm::TaskForm(QWidget *parent)
 {
     configureInterfaceStructure();
     configureFunctionality();
-    //this->open();
 }
 
 void TaskForm::configureInterfaceStructure()

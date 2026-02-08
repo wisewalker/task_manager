@@ -85,15 +85,25 @@ void MainWindow::configureFunctionality()
 
     //Set connection to react for DB change
     QObject::connect(m_db_communicator,
-                     &DatabaseCommunicator::recordSavedInDatabase,
+                     &DatabaseCommunicator::databaseContentsChanged,
                      m_tasksPage,
                      &TasksManagementPage::onUpdateView);
     
     QObject::connect(m_db_communicator,
-                     &DatabaseCommunicator::recordSavedInDatabase,
+                     &DatabaseCommunicator::databaseContentsChanged,
                      m_welcomePage,
                      &WelcomePage::onUpdateViews);
     
+    //Set connection for task observer form dialog window (used inside tasks management page)
+    QObject::connect(m_tasksPage,
+                     &TasksManagementPage::taskFieldsUpdated,
+                     m_db_communicator,
+                     &DatabaseCommunicator::onUpdateTask);
+    
+    QObject::connect(m_tasksPage,
+                     &TasksManagementPage::taskDeletionRequested,
+                     m_db_communicator,
+                     &DatabaseCommunicator::onDeleteTask);
 }
 
 MainWindow::~MainWindow()

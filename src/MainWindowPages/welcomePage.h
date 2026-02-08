@@ -2,6 +2,7 @@
 #define WELCOMEPAGE_H
 
 #include "limitedProxyModel.h"
+#include "tasksTableDelegate.h"
 
 #include <QWidget>
 

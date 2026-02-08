@@ -10,6 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     src/Database/databaseCommunicator.cpp \
+    src/MainWindowPages/tasksObserver.cpp \
+    src/MainWindowPages/tasksTableDelegate.cpp \
     src/globalConstants.cpp \
     src/MainWindowPages/limitedProxyModel.cpp \
     src/App/main.cpp \
@@ -23,6 +25,8 @@ HEADERS += \
     src/App/globalConstants.h \
     src/MainWindowPages/limitedProxyModel.h \
     src/AppMainWindow/mainwindow.h \
+    src/MainWindowPages/tasksObserver.h \
+    src/MainWindowPages/tasksTableDelegate.h \
     src/TaskForm/taskForm.h \
     src/MainWindowPages/tasksManagementPage.h \
     src/MainWindowPages/welcomePage.h
