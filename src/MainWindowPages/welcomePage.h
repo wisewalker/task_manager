@@ -58,6 +58,7 @@ public slots:
 signals:
     void createTaskButtonClicked(bool);
     void listTasksButtonClicked(bool);
+    void tasksViewItemInteracted(const QModelIndex &index);
     
 };
 

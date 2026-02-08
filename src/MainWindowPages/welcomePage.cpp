@@ -134,7 +134,9 @@ void WelcomePage::configureFunctionality()
     
     //Forbid editing tasks from welcome page (read-only mode)
     m_recentlyCreatedTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_recentlyCreatedTasksView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_reachingDeadlineTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_reachingDeadlineTasksView->setSelectionBehavior(QAbstractItemView::SelectRows);
     
     //Configure view of recently created tasks
     m_recentlyCreatedTasksModel->setSourceModel(m_sourceModel);
@@ -176,6 +178,23 @@ void WelcomePage::configureFunctionality()
                      &QPushButton::clicked,
                      this,
                      &WelcomePage::listTasksButtonClicked);
+    
+    //Prepare connections to provide access and quick trasnsition to tasks page
+    QObject::connect(m_reachingDeadlineTasksView,
+                     &QTableView::doubleClicked,
+                     this,
+                     [this](const QModelIndex &index) {
+                         m_reachingDeadlineTasksView->selectionModel()->clearSelection();
+                         emit tasksViewItemInteracted(index);
+                     });
+    
+    QObject::connect(m_recentlyCreatedTasksView,
+                     &QTableView::doubleClicked,
+                     this,
+                     [this](const QModelIndex &index) {
+                         m_recentlyCreatedTasksView->selectionModel()->clearSelection();
+                         emit tasksViewItemInteracted(index);
+                     });
 }
 
 void WelcomePage::onUpdateViews()

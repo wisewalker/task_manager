@@ -65,7 +65,16 @@ void MainWindow::configureFunctionality()
                      &WelcomePage::listTasksButtonClicked,
                      this,
                      &MainWindow::onMoveToTasksPage);
-    
+
+    QObject::connect(m_welcomePage,
+                     &WelcomePage::tasksViewItemInteracted,
+                     this,
+                     [this](const QModelIndex &index) {
+                         int id = index.siblingAtColumn(0).data().toInt();
+                         this->onMoveToTasksPage(true);
+                         m_tasksPage->onInteractViewItem(id);
+                     });
+
     //Set connections for tasks management page
     QObject::connect(m_tasksPage,
                      &TasksManagementPage::createTaskButtonClicked,
@@ -104,6 +113,7 @@ void MainWindow::configureFunctionality()
                      &TasksManagementPage::taskDeletionRequested,
                      m_db_communicator,
                      &DatabaseCommunicator::onDeleteTask);
+    
 }
 
 MainWindow::~MainWindow()

@@ -51,12 +51,7 @@ private:
     QPlainTextEdit *task_edit;
     QDateTimeEdit *creationDate_edit;
     QDateTimeEdit *deadlineDate_edit;
-    
-    QPushButton *apply_button;
-    QPushButton *cancel_button;
-    QPushButton *next_button;
-    QPushButton *previous_button;
-    
+
     TasksObserver *m_tasksObserver = nullptr;
     
 public:
@@ -72,6 +67,7 @@ private:
 public slots:
     void onUpdateView();
     void onInteractViewItem(const QModelIndex&);
+    void onInteractViewItem(int id);
     void onDeleteViewItem();
     
 signals:
