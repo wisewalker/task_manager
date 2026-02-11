@@ -16,11 +16,15 @@ void TaskForm::configureInterfaceStructure()
     m_mainLayout = new QVBoxLayout(this);
 
     m_titleEdit = new QLineEdit(this);
+    m_titleEdit->setObjectName("titleEdit");
     m_descriptionEdit = new QTextEdit(this);
+    m_descriptionEdit->setObjectName("descriptionEdit");
     m_deadlineSetButton = new QCheckBox("Set Deadline", this);
+    m_deadlineSetButton->setObjectName("deadlineCheckBox");
     m_deadlineEdit = new QDateTimeEdit(this);
+    m_deadlineEdit->setObjectName("deadlineEdit");
 
-    m_applyButton = new QPushButton("Apply", this);
+    m_applyButton = new QPushButton(QIcon(QPixmap("://resources/save_icon_3.png")), "Apply", this);
     m_cancelButton = new QPushButton("Cancel", this);
     QHBoxLayout *bottomLayout = new QHBoxLayout;
     bottomLayout->addWidget(m_applyButton);

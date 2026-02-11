@@ -22,7 +22,6 @@ void MainWindow::configureInterfaceStructure()
 {
     m_tabs = new QTabWidget(this);
     m_tabs->setObjectName("tabs");
-
     m_welcomePage = new WelcomePage(m_tabs, m_db_communicator->model());
     m_tasksPage = new TasksManagementPage(m_tabs, m_db_communicator->model());
     m_newTaskForm = new TaskForm(this);
