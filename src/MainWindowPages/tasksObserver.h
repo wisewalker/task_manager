@@ -29,7 +29,8 @@ private:
     QDateTimeEdit *m_deadlineEdit = nullptr;
     QDateTimeEdit *m_creationDateEdit = nullptr;
 
-    QDialogButtonBox *m_buttonBox = nullptr;
+    QPushButton *m_okButton = nullptr;
+    QPushButton *m_cancelButton = nullptr;
     QPushButton *m_deleteButton = nullptr;
     
 public:
@@ -45,6 +46,7 @@ public:
 
 private:
     void configureInterfaceStructure();
+    void configureInterfaceStyle();
     void configureFunctionality();
     
 signals:

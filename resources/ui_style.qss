@@ -1,0 +1,105 @@
+QMainWindow {
+  background-color: #639059; }
+  QMainWindow QTabWidget {
+    border-top: 20px; }
+    QMainWindow QTabWidget::pane {
+      background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:1, y2:0,  stop:0 #05284c,  stop:0.25 #0a529d, stop:0.5 #107ded, stop:0.75 #5ea8f4, stop:1 #aed4fa);
+      border-color: #89b181;
+      border: 4px solid #89b181;
+      position: absolute;
+      top: -0.5em; }
+    QMainWindow QTabWidget::tab-bar {
+      alignment: left; }
+    QMainWindow QTabWidget QTabBar::tab {
+      border-bottom: 4px solid #42613c;
+      min-height: 30px;
+      min-width: 120px;
+      background-color: #639059;
+      border-color: #89b181;
+      color: #fcef9b;
+      text-align: center;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+      font-style: normal;
+      font-weight: 400; }
+      QMainWindow QTabWidget QTabBar::tab:hover {
+        background-color: #46673f; }
+      QMainWindow QTabWidget QTabBar::tab:selected {
+        background-color: #4e7246; }
+      QMainWindow QTabWidget QTabBar::tab:last {
+        border-bottom-right-radius: 10px; }
+  QMainWindow QDialog {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,  stop:0 #05284c,  stop:0.25 #083d74, stop:0.5 #0a529d, stop:0.75 #0d68c5, stop:1 #107ded);
+    border-color: #89b181; }
+    QMainWindow QDialog QPushButton {
+      max-width: 200px;
+      max-height: 60px;
+      border-radius: 8px; }
+  QMainWindow QWidget QPushButton {
+    background-color: #5c8652;
+    border-color: #0d68c5;
+    color: #fdf3b2;
+    border: 3px solid #89b181;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400; }
+    QMainWindow QWidget QPushButton:hover {
+      background-color: #46673f; }
+    QMainWindow QWidget QPushButton:pressed {
+      background-color: #3e5b38; }
+  QMainWindow QWidget QLabel {
+    text-align: center;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    border-color: none;
+    color: #fbeb83;
+    border: 2px none;
+    border: 2px; }
+    QMainWindow QWidget QLabel#welcomeSign {
+      background-color: none; }
+  QMainWindow QWidget#welcomePage QPushButton {
+    max-width: 240px;
+    max-height: 45px; }
+    QMainWindow QWidget#welcomePage QPushButton#createTaskButton {
+      border-top-right-radius: 20px; }
+      QMainWindow QWidget#welcomePage QPushButton#createTaskButton:hover {
+        margin-right: 4px; }
+    QMainWindow QWidget#welcomePage QPushButton#listTasksButton {
+      border-bottom-left-radius: 20px; }
+      QMainWindow QWidget#welcomePage QPushButton#listTasksButton:hover {
+        margin-left: 4px; }
+  QMainWindow QWidget#welcomePage QLabel#welcomeSign {
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Andale Mono', Courier, monospace;
+    font-style: italic;
+    font-weight: bold;
+    color: #fae455; }
+  QMainWindow QWidget#welcomePage QLabel#appSign {
+    text-align: center;
+    font-size: 24px;
+    font-family: 'FreeMono', Courier, monospace;
+    font-style: italic;
+    font-weight: 800;
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,  stop:0 #fcef9b, stop:0.25 #fbeb83, stop:0.5 #fae76c, stop:0.75 #fae455, stop:1 #f9e03e);
+    border-color: #5c8652;
+    color: #77a56e;
+    border: 2px none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px; }
+  QMainWindow QWidget#tasksManagementPage QDialog QPushButton {
+    border-radius: 8px; }
+  QMainWindow QWidget#tasksManagementPage QPushButton {
+    max-width: 200px;
+    max-height: 60px;
+    border-radius: 20px;
+    padding-left: 15px;
+    padding-right: 15px; }
+
+/*# sourceMappingURL=ui_style.qss.map */

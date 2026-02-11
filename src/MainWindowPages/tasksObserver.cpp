@@ -3,7 +3,9 @@
 TasksObserver::TasksObserver(QWidget *parent)
     : QDialog{parent}
 {
-    this->setObjectName("taskObserver");
+    this->setObjectName("tasksObserver");
+    
+    this->setWindowTitle("Task Observer");
     
     configureInterfaceStructure();
     configureFunctionality();
@@ -19,7 +21,17 @@ void TasksObserver::configureInterfaceStructure()
     m_deadlineEdit = new QDateTimeEdit(this);
     m_creationDateEdit = new QDateTimeEdit(this);
     m_creationDateEdit->setEnabled(false);
-    m_deleteButton = new QPushButton("Delete");
+    m_okButton = new QPushButton(QIcon(QPixmap("://resources/update_icon_2.png")), "Update", this);
+    m_okButton->setObjectName("updateButton");
+    m_cancelButton = new QPushButton("Cancel", this);
+    m_cancelButton->setObjectName("cancelButton");
+    m_deleteButton = new QPushButton(QIcon(QPixmap("://resources/delete_icon_4.png")), "Delete", this);
+    m_deleteButton->setObjectName("deleteButton");
+    
+    QHBoxLayout *buttonsLayout = new QHBoxLayout;
+    buttonsLayout->addWidget(m_okButton);
+    buttonsLayout->addWidget(m_cancelButton);
+    buttonsLayout->addWidget(m_deleteButton);
     
     m_mainLayout->addWidget(new QLabel("Title:", this));
     m_mainLayout->addWidget(m_titleEdit);
@@ -29,19 +41,18 @@ void TasksObserver::configureInterfaceStructure()
     m_mainLayout->addWidget(m_deadlineEdit);
     m_mainLayout->addWidget(new QLabel("Creation Date:", this));
     m_mainLayout->addWidget(m_creationDateEdit);
-    
-    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                                           | QDialogButtonBox::Cancel,
-                                                       this);
-    
-    m_mainLayout->addWidget(m_buttonBox);
-    m_mainLayout->addWidget(m_deleteButton);
+    m_mainLayout->addLayout(buttonsLayout);
+}
+
+void TasksObserver::configureInterfaceStyle()
+{
+    //m_okButton->setIcon(QIcon());
 }
 
 void TasksObserver::configureFunctionality()
 {
-    QObject::connect(m_buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    QObject::connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(m_okButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(m_cancelButton, &QPushButton::clicked, this, &QDialog::reject);
     QObject::connect(m_deleteButton, &QPushButton::clicked, this, [this](bool){
         qDebug() << "[!]Delete task button was clicked!";
         emit deleteButtonClicked();});
