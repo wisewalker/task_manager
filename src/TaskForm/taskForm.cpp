@@ -3,6 +3,10 @@
 TaskForm::TaskForm(QWidget *parent)
     : QDialog{parent}
 {
+    this->setObjectName("taskForm");
+    
+    this->setWindowTitle("New Task Form");
+    
     configureInterfaceStructure();
     configureFunctionality();
 }
@@ -22,8 +26,6 @@ void TaskForm::configureInterfaceStructure()
     bottomLayout->addWidget(m_applyButton);
     bottomLayout->addWidget(m_cancelButton);
 
-    m_mainLayout->addWidget(new QLabel("Create New Task", this), 0);
-    m_mainLayout->addSpacing(30);
     m_mainLayout->addWidget(new QLabel("Title", this), 0);
     m_mainLayout->addSpacing(5);
     m_mainLayout->addWidget(m_titleEdit);

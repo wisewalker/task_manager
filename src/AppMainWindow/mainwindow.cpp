@@ -4,6 +4,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setObjectName("mainWindow");
+    
+    this->setWindowTitle("Task Manager");
     //Cover 65% of desktop space
     this->resize(QDesktopWidget().availableGeometry(this).size() * 0.65);
     
@@ -19,20 +21,28 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::configureInterfaceStructure()
 {
     m_tabs = new QTabWidget(this);
+    m_tabs->setObjectName("tabs");
 
     m_welcomePage = new WelcomePage(m_tabs, m_db_communicator->model());
     m_tasksPage = new TasksManagementPage(m_tabs, m_db_communicator->model());
     m_newTaskForm = new TaskForm(this);
-
-    m_tabs->addTab(m_welcomePage, "Home");
-    m_tabs->addTab(m_tasksPage, "Tasks");
+    
+    m_tabs->addTab(m_welcomePage, "&Home");
+    m_tabs->addTab(m_tasksPage, "&Tasks");
 
     this->setCentralWidget(m_tabs);
 }
 
 void MainWindow::configureInterfaceStyle()
 {
-    
+    QFile styleFile(":/resources/ui_style.qss");
+    if (!styleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Style file CANNOT be read!";
+        return;
+    } else {
+        QTextStream in(&styleFile);
+        this->setStyleSheet(in.readAll());
+    }
 }
 
 void MainWindow::onCreateNewTask(bool)

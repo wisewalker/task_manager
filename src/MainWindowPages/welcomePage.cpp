@@ -25,7 +25,7 @@ void WelcomePage::configureStructure()
     //Create and configure welcome_page UI elements
     QLabel *welcomeSign = new QLabel;
     welcomeSign->setObjectName("welcomeSign");
-    welcomeSign->setText("Welcome back \nto your favorite");
+    welcomeSign->setText("Welcome back \nto your favorite..");
     welcomeSign->setFrameStyle(QFrame::NoFrame);
     welcomeSign->setContentsMargins(2, 2, 2, 2);
     welcomeSign->setAlignment(Qt::AlignCenter);
@@ -33,21 +33,21 @@ void WelcomePage::configureStructure()
 
     QLabel *appSign = new QLabel;
     appSign->setObjectName("appSign");
-    appSign->setText("Task manager");
+    QPixmap icon_pic("://resources/task_manager_icon_3.png");
+    appSign->setPixmap(icon_pic);
     appSign->setFrameStyle(QFrame::NoFrame);
     appSign->setContentsMargins(2, 2, 2, 2);
-    appSign->setAlignment(Qt::AlignCenter);
     appSign->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     m_createTaskButton = new QPushButton;
     m_createTaskButton->setObjectName("createTaskButton");
-    m_createTaskButton->setText("Create new task");
+    m_createTaskButton->setText("Create Task");
     m_createTaskButton->setContentsMargins(5, 1, 5, 1);
     m_createTaskButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     m_listTasksButton = new QPushButton;
     m_listTasksButton->setObjectName("listTasksButton");
-    m_listTasksButton->setText("List current tasks");
+    m_listTasksButton->setText("List Tasks");
     m_listTasksButton->setContentsMargins(5, 1, 5, 1);
     m_listTasksButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
@@ -80,11 +80,8 @@ void WelcomePage::configureStructure()
     
     leftVLayout->addSpacing(15);
     leftVLayout->addWidget(welcomeSign, 1);
-    leftVLayout->addSpacing(5);
-    leftVLayout->addStretch(2);
-    leftVLayout->addWidget(appSign, 2);
+    leftVLayout->addWidget(appSign, 1);
     leftVLayout->addWidget(m_createTaskButton, 1);
-    leftVLayout->addSpacing(5);
     leftVLayout->addWidget(m_listTasksButton, 1);
     leftVLayout->addStretch(4);
     

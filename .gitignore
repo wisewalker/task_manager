@@ -78,3 +78,9 @@ CMakeLists.txt.user*
 # Custom
 /other_notes
 /src/globalConstants.cpp
+
+# CSS-relateed
+/.sass-cache
+/resources/*.map
+/resources/*.*css
+/resources/.sass-cache/

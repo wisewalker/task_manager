@@ -36,7 +36,7 @@ void TasksManagementPage::configureStructure()
 
     m_createTaskButton = new QPushButton;
     m_createTaskButton->setObjectName("createTaskButton");
-    m_createTaskButton->setText("Create new task");
+    m_createTaskButton->setText("Create Task");
     m_createTaskButton->setContentsMargins(5, 1, 5, 1);
     m_createTaskButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
@@ -82,7 +82,10 @@ void TasksManagementPage::configureStructure()
     m_tasksObserver = new TasksObserver(this);
 }
 
-void TasksManagementPage::configureStyle() {}
+void TasksManagementPage::configureStyle()
+{
+
+}
 
 void TasksManagementPage::configureFunctionality()
 {
