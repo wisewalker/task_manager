@@ -21,11 +21,11 @@ void TasksObserver::configureInterfaceStructure()
     m_deadlineEdit = new QDateTimeEdit(this);
     m_creationDateEdit = new QDateTimeEdit(this);
     m_creationDateEdit->setEnabled(false);
-    m_okButton = new QPushButton(QIcon(QPixmap("://resources/update_icon_1.png")), "Update", this);
+    m_okButton = new QPushButton(QIcon(QPixmap("://resources/update_icon_2.png")), "Update", this);
     m_okButton->setObjectName("updateButton");
     m_cancelButton = new QPushButton("Cancel", this);
     m_cancelButton->setObjectName("cancelButton");
-    m_deleteButton = new QPushButton(QIcon(QPixmap("://resources/delete_icon_1.png")), "Delete", this);
+    m_deleteButton = new QPushButton(QIcon(QPixmap("://resources/delete_icon_4.png")), "Delete", this);
     m_deleteButton->setObjectName("deleteButton");
     
     QHBoxLayout *buttonsLayout = new QHBoxLayout;
