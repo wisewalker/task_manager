@@ -68,12 +68,14 @@ public slots:
     void onUpdateView();
     void onInteractViewItem(const QModelIndex&);
     void onInteractViewItem(int id);
+
+    void onUpdateViewItem();
     void onDeleteViewItem();
     
 signals:
     void createTaskButtonClicked(bool);
     void backHomeButtonClicked(bool);
-    void taskFieldsUpdated(int id, QString title, QString description, QString deadline);
+    void taskUpdateRequested(const TaskData* updatedTaskData);
     void taskDeletionRequested(int id);
 };
 

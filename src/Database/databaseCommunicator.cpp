@@ -121,8 +121,15 @@ void DatabaseCommunicator::onCreateNewTask(QString title, QString description, Q
     QJsonDocument doc(task_contents);
     QString jsonString = doc.toJson(QJsonDocument::Compact);
     query.bindValue(":task_contents", jsonString);
-
-    query.bindValue(":deadline_date", deadline);
+    
+    if(deadline.count() == 0)
+    {
+        query.bindValue(":deadline_date", QVariant::fromValue(nullptr));
+    }
+    else
+    {
+        query.bindValue(":deadline_date", deadline);
+    }
 
     query.exec();
     if (query.isActive()) {
@@ -138,8 +145,16 @@ void DatabaseCommunicator::onCreateNewTask(QString title, QString description, Q
     emit databaseContentsChanged();
 }
 
-void DatabaseCommunicator::onUpdateTask(int id, QString title, QString description, QString deadline)
+void DatabaseCommunicator::onUpdateTask(const TaskData* updatedTaskData)
 {
+    int id = updatedTaskData->id();
+    QString title = updatedTaskData->title();
+    QString description = updatedTaskData->description();
+    QString deadline = updatedTaskData->deadlineDate();
+    
+    //release the source task data
+    delete updatedTaskData;
+    
     qDebug() << "[!]Udpated data for existing task is received in DB!";
     qDebug() << "ID: " << id;
     qDebug() << "Title: " << title;
@@ -155,13 +170,20 @@ void DatabaseCommunicator::onUpdateTask(int id, QString title, QString descripti
     query.bindValue(":id", id);
     
     QJsonObject task_contents;
-    task_contents["title"] = title;
     task_contents["description"] = description;
+    task_contents["title"] = title;
     QJsonDocument doc(task_contents);
     QString jsonString = doc.toJson(QJsonDocument::Compact);
     query.bindValue(":task_contents", jsonString);
     
-    query.bindValue(":deadline_date", deadline);
+    if(deadline.count() == 0)
+    {
+        query.bindValue(":deadline_date", QVariant::fromValue(nullptr));
+    }
+    else
+    {
+        query.bindValue(":deadline_date", deadline);
+    }
     
     query.exec();
     if (query.isActive()) {
