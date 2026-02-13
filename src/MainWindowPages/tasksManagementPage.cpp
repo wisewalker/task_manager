@@ -154,15 +154,15 @@ void TasksManagementPage::onInteractViewItem(const QModelIndex &index)
 
     //Retreive current task data
     QString taskContents = index.siblingAtColumn(1).data().toString();
-    QString deadlineDate = index.siblingAtColumn(2).data().toDateTime().toString();
-    QString creationDate = index.siblingAtColumn(3).data().toDateTime().toString();
+    QString creationDate = index.siblingAtColumn(2).data().toDateTime().toString();
+    QString deadlineDate = index.siblingAtColumn(3).data().toDateTime().toString();
 
-    m_tasksObserver->setData(taskContents, deadlineDate, creationDate);
+    m_tasksObserver->setEditorsData(taskContents, creationDate, deadlineDate);
     
     if (m_tasksObserver->exec() == QDialog::Accepted) {
-        QString updatedTitle = m_tasksObserver->getTitle();
-        QString updatedDescription = m_tasksObserver->getDescription();
-        QString updatedDeadlineDate = m_tasksObserver->getDeadlineDate();
+        QString updatedTitle = m_tasksObserver->getEditorTitle();
+        QString updatedDescription = m_tasksObserver->getEditorDescription();
+        QString updatedDeadlineDate = m_tasksObserver->getEditorDeadlineDate();
         
         qDebug() << "Title: " << updatedTitle;
         qDebug() << "Description: " << updatedDescription;
@@ -202,15 +202,15 @@ void TasksManagementPage::onInteractViewItem(int id)
     
     //Retreive current task data
     QString taskContents = calculatedIndex.siblingAtColumn(1).data().toString();
-    QString deadlineDate = calculatedIndex.siblingAtColumn(2).data().toDateTime().toString();
-    QString creationDate = calculatedIndex.siblingAtColumn(3).data().toDateTime().toString();
+    QString creationDate = calculatedIndex.siblingAtColumn(2).data().toDateTime().toString();
+    QString deadlineDate = calculatedIndex.siblingAtColumn(3).data().toDateTime().toString();
     
-    m_tasksObserver->setData(taskContents, deadlineDate, creationDate);
+    m_tasksObserver->setEditorsData(taskContents, creationDate, deadlineDate);
     
     if (m_tasksObserver->exec() == QDialog::Accepted) {
-        QString updatedTitle = m_tasksObserver->getTitle();
-        QString updatedDescription = m_tasksObserver->getDescription();
-        QString updatedDeadlineDate = m_tasksObserver->getDeadlineDate();
+        QString updatedTitle = m_tasksObserver->getEditorTitle();
+        QString updatedDescription = m_tasksObserver->getEditorDescription();
+        QString updatedDeadlineDate = m_tasksObserver->getEditorDeadlineDate();
         
         qDebug() << "Title: " << updatedTitle;
         qDebug() << "Description: " << updatedDescription;

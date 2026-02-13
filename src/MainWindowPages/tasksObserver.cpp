@@ -46,7 +46,7 @@ void TasksObserver::configureInterfaceStructure()
 
 void TasksObserver::configureInterfaceStyle()
 {
-    //m_okButton->setIcon(QIcon());
+    
 }
 
 void TasksObserver::configureFunctionality()
@@ -58,9 +58,9 @@ void TasksObserver::configureFunctionality()
         emit deleteButtonClicked();});
 }
 
-void TasksObserver::setData(const QString &taskContents,
-                            const QString &deadlineDate,
-                            const QString &creationDate)
+void TasksObserver::setEditorsData(const QString &taskContents,
+                            const QString &creationDate,
+                            const QString &deadlineDate)
 {
     QString titleText;
     QString descriptionText;
@@ -82,22 +82,22 @@ void TasksObserver::setData(const QString &taskContents,
     m_creationDateEdit->setDateTime(QDateTime::fromString(creationDate));
 }
 
-QString TasksObserver::getTitle() const
+QString TasksObserver::getEditorTitle() const
 {
     return m_titleEdit->text();
 }
 
-QString TasksObserver::getDescription() const
+QString TasksObserver::getEditorDescription() const
 {
     return m_descriptionEdit->toPlainText();
 }
 
-QString TasksObserver::getDeadlineDate() const
+QString TasksObserver::getEditorDeadlineDate() const
 {
     return m_deadlineEdit->text();
 }
 
-QString TasksObserver::getCreationDate() const
+QString TasksObserver::getEditorCreationDate() const
 {
     return m_creationDateEdit->text();
 }

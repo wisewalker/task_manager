@@ -17,6 +17,8 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
+#include "taskData.h"
+
 class TasksObserver : public QDialog
 {
     Q_OBJECT
@@ -32,17 +34,21 @@ private:
     QPushButton *m_okButton = nullptr;
     QPushButton *m_cancelButton = nullptr;
     QPushButton *m_deleteButton = nullptr;
+
+    TaskData *m_taskData = nullptr;
     
 public:
     explicit TasksObserver(QWidget *parent = nullptr);
 
-    void setData(const QString &taskContents,
-                 const QString &deadlineDate,
-                 const QString &creationDate);
-    QString getTitle() const;
-    QString getDescription() const;
-    QString getDeadlineDate() const;
-    QString getCreationDate() const;
+    void setEditorsData(const QString &taskContents,
+                 const QString &creationDate,
+                 const QString &deadlineDate);
+    QString getEditorTitle() const;
+    QString getEditorDescription() const;
+    QString getEditorDeadlineDate() const;
+    QString getEditorCreationDate() const;
+
+    TaskData &sourceTaskData();
 
 private:
     void configureInterfaceStructure();

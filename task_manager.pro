@@ -18,7 +18,8 @@ SOURCES += \
     src/AppMainWindow/mainwindow.cpp \
     src/TaskForm/taskForm.cpp \
     src/MainWindowPages/tasksManagementPage.cpp \
-    src/MainWindowPages/welcomePage.cpp
+    src/MainWindowPages/welcomePage.cpp \
+    src/taskData.cpp
 
 HEADERS += \
     src/Database/databaseCommunicator.h \
@@ -29,7 +30,8 @@ HEADERS += \
     src/MainWindowPages/tasksTableDelegate.h \
     src/TaskForm/taskForm.h \
     src/MainWindowPages/tasksManagementPage.h \
-    src/MainWindowPages/welcomePage.h
+    src/MainWindowPages/welcomePage.h \
+    src/taskData.h
 
 INCLUDEPATH += \
     src/Database/ \
@@ -37,6 +39,7 @@ INCLUDEPATH += \
     src/MainWindowPages/ \ 
     src/AppMainWindow/ \ 
     src/TaskForm/ \ 
+    src/
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
