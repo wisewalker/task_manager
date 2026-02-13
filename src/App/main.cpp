@@ -11,6 +11,13 @@
 #include <QLayout>
 #include <QTableView>
 
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlTableModel>
+
+#include "globalConstants.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

@@ -114,7 +114,7 @@ void MainWindow::configureFunctionality()
     
     //Set connection for task observer form dialog window (used inside tasks management page)
     QObject::connect(m_tasksPage,
-                     &TasksManagementPage::taskFieldsUpdated,
+                     &TasksManagementPage::taskUpdateRequested,
                      m_db_communicator,
                      &DatabaseCommunicator::onUpdateTask);
     

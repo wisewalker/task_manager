@@ -115,7 +115,6 @@ void TasksManagementPage::configureFunctionality()
                      this,
                      &TasksManagementPage::backHomeButtonClicked);
     
-    
     //Configure connections for tasks view and applied tasks observer dialog window
     m_assignedTasksView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_assignedTasksView->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -125,10 +124,14 @@ void TasksManagementPage::configureFunctionality()
                      qOverload<const QModelIndex&>(&TasksManagementPage::onInteractViewItem));
 
     QObject::connect(m_tasksObserver,
-                     &TasksObserver::deleteButtonClicked,
+                     &TasksObserver::deleteTaskRequested,
                      this,
                      &TasksManagementPage::onDeleteViewItem);
- 
+    
+    QObject::connect(m_tasksObserver,
+                     &TasksObserver::updateTaskRequested,
+                     this,
+                     &TasksManagementPage::onUpdateViewItem);
 }
 
 void TasksManagementPage::onDeleteViewItem()
@@ -137,6 +140,25 @@ void TasksManagementPage::onDeleteViewItem()
     int taskID = m_assignedTasksView->currentIndex().siblingAtColumn(0).data().toInt();
 
     emit taskDeletionRequested(taskID);
+
+    m_tasksObserver->close();
+}
+
+void TasksManagementPage::onUpdateViewItem()
+{
+    TaskData *updatedTaskData = new TaskData;
+    updatedTaskData->setId(m_tasksObserver->getCurrentTaskID());
+    updatedTaskData->setTitle(m_tasksObserver->getEditorTitle());
+    updatedTaskData->setDescription(m_tasksObserver->getEditorDescription());
+    updatedTaskData->setDeadlineDate(m_tasksObserver->getEditorDeadlineDate());
+
+    qDebug() << "Title: " << updatedTaskData->title();
+    qDebug() << "Description: " << updatedTaskData->description();
+    qDebug() << "Deadline: " << updatedTaskData->deadlineDate();
+    
+    emit taskUpdateRequested(updatedTaskData);
+    
+    qDebug() << "[!]Request for task update was sent!";
 
     m_tasksObserver->close();
 }
@@ -152,25 +174,16 @@ void TasksManagementPage::onInteractViewItem(const QModelIndex &index)
     if (!index.isValid())
         return;
 
-    //Retreive current task data
-    QString taskContents = index.siblingAtColumn(1).data().toString();
-    QString deadlineDate = index.siblingAtColumn(2).data().toDateTime().toString();
-    QString creationDate = index.siblingAtColumn(3).data().toDateTime().toString();
+    TaskData sourceTaskData;
+    sourceTaskData.setId(index.siblingAtColumn(0).data().toInt());
+    sourceTaskData.setContents(index.siblingAtColumn(1).data().toString());
+    sourceTaskData.setCreationDate(index.siblingAtColumn(2).data().toDateTime().toString());
+    sourceTaskData.setDeadlineDate(index.siblingAtColumn(3).data().toDateTime().toString());
 
-    m_tasksObserver->setData(taskContents, deadlineDate, creationDate);
-    
-    if (m_tasksObserver->exec() == QDialog::Accepted) {
-        QString updatedTitle = m_tasksObserver->getTitle();
-        QString updatedDescription = m_tasksObserver->getDescription();
-        QString updatedDeadlineDate = m_tasksObserver->getDeadlineDate();
-        
-        qDebug() << "Title: " << updatedTitle;
-        qDebug() << "Description: " << updatedDescription;
-        qDebug() << "Deadline: " << updatedDeadlineDate;
-        qDebug() << "Creation date: " << creationDate;
-        
-        emit taskFieldsUpdated(index.siblingAtColumn(0).data().toInt(), updatedTitle, updatedDescription, updatedDeadlineDate);
-    }
+    m_tasksObserver->setEditorsData(sourceTaskData);
+    m_tasksObserver->setCurrentTaskID(index.siblingAtColumn(0).data().toInt());
+
+    m_tasksObserver->open();
 }
 
 void TasksManagementPage::onInteractViewItem(int id)
@@ -186,7 +199,7 @@ void TasksManagementPage::onInteractViewItem(int id)
                                                                   Qt::MatchExactly);
 
     if (matchedIndicies.isEmpty()) {
-        qWarning() << "[!]Task with provided ID was NOT found!";
+        qDebug() << "[!]Task with provided ID was NOT found!";
         return;
     }
 
@@ -197,27 +210,8 @@ void TasksManagementPage::onInteractViewItem(int id)
                                                   QItemSelectionModel::Select
                                                       | QItemSelectionModel::Rows);
     m_assignedTasksView->scrollTo(calculatedIndex, QAbstractItemView::EnsureVisible);
-    
+
     qDebug() << "[!]Task with provided ID was successfully found!";
-    
-    //Retreive current task data
-    QString taskContents = calculatedIndex.siblingAtColumn(1).data().toString();
-    QString deadlineDate = calculatedIndex.siblingAtColumn(2).data().toDateTime().toString();
-    QString creationDate = calculatedIndex.siblingAtColumn(3).data().toDateTime().toString();
-    
-    m_tasksObserver->setData(taskContents, deadlineDate, creationDate);
-    
-    if (m_tasksObserver->exec() == QDialog::Accepted) {
-        QString updatedTitle = m_tasksObserver->getTitle();
-        QString updatedDescription = m_tasksObserver->getDescription();
-        QString updatedDeadlineDate = m_tasksObserver->getDeadlineDate();
-        
-        qDebug() << "Title: " << updatedTitle;
-        qDebug() << "Description: " << updatedDescription;
-        qDebug() << "Deadline: " << updatedDeadlineDate;
-        qDebug() << "Creation date: " << creationDate;
-        
-        emit taskFieldsUpdated(calculatedIndex.siblingAtColumn(0).data().toInt(), updatedTitle, updatedDescription, updatedDeadlineDate);
-    }
-    
+
+    this->onInteractViewItem(calculatedIndex);
 }

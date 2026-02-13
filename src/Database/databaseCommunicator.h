@@ -11,6 +11,8 @@
 
 #include <QErrorMessage>
 
+#include "taskData.h"
+
 class DatabaseCommunicator : public QObject
 {
     Q_OBJECT
@@ -33,7 +35,7 @@ private:
 
 public slots:
     void onCreateNewTask(QString title, QString description, QString deadline);
-    void onUpdateTask(int id, QString title, QString description, QString deadline);
+    void onUpdateTask(const TaskData* updatedTaskData);
     void onDeleteTask(int id);
         
 signals:

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPlainTextEdit>
+#include <QCheckBox>
 #include <QDateTimeEdit>
 #include <QPushButton>
 
@@ -17,6 +18,8 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
+#include "taskData.h"
+
 class TasksObserver : public QDialog
 {
     Q_OBJECT
@@ -27,30 +30,40 @@ private:
     QLineEdit *m_titleEdit = nullptr;
     QPlainTextEdit *m_descriptionEdit = nullptr;
     QDateTimeEdit *m_deadlineEdit = nullptr;
+    QCheckBox *m_setDeadlineButton = nullptr;
     QDateTimeEdit *m_creationDateEdit = nullptr;
 
-    QPushButton *m_okButton = nullptr;
+    QPushButton *m_updateButton = nullptr;
     QPushButton *m_cancelButton = nullptr;
     QPushButton *m_deleteButton = nullptr;
-    
+
+    int m_currentTaskID = -1;
+
 public:
     explicit TasksObserver(QWidget *parent = nullptr);
+    void setCurrentTaskID(int id);
 
-    void setData(const QString &taskContents,
-                 const QString &deadlineDate,
-                 const QString &creationDate);
-    QString getTitle() const;
-    QString getDescription() const;
-    QString getDeadlineDate() const;
-    QString getCreationDate() const;
+    void setEditorsData(const TaskData &sourceTaskData);
+    int getCurrentTaskID();
+    QString getEditorTitle() const;
+    QString getEditorDescription() const;
+    QString getEditorDeadlineDate() const;
+    QString getEditorCreationDate() const;
 
+    
 private:
     void configureInterfaceStructure();
     void configureInterfaceStyle();
     void configureFunctionality();
-    
+
+private slots:
+    void onDeleteButton(bool);
+    void onUpdateButton(bool);
+    void onCancelButton(bool);
+
 signals:
-    void deleteButtonClicked();
+    void deleteTaskRequested();
+    void updateTaskRequested();
 };
 
 #endif // TASKSOBSERVER_H
