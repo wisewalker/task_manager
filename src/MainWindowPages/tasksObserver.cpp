@@ -22,6 +22,7 @@ void TasksObserver::configureInterfaceStructure()
     m_setDeadlineButton->setObjectName("setDeadlineButton");
     m_deadlineEdit = new QDateTimeEdit(this);
     m_creationDateEdit = new QDateTimeEdit(this);
+    m_creationDateEdit->setObjectName("creationDateEdit");
     m_creationDateEdit->setEnabled(false);
     m_updateButton = new QPushButton(QIcon(QPixmap("://resources/update_icon_2.png")), "Update", this);
     m_updateButton->setObjectName("updateButton");
