@@ -97,12 +97,9 @@ $gradient_2: "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,
                               stop:0.75 #{scale-color($beige, $lightness: -30%)},
                               stop:1 #{scale-color($beige, $lightness: -35%)})";
 
-$gradient_3: "qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                              stop:0 #{$dark_blue}, 
-                              stop:0.25 #{scale-color($dark_blue, $lightness: +10%)},
-                              stop:0.5 #{scale-color($dark_blue, $lightness: +20%)},
-                              stop:0.75 #{scale-color($dark_blue, $lightness: +30%)},
-                              stop:1 #{scale-color($dark_blue, $lightness: +40%)})";
+$gradient_3: "qlineargradient(spread:pad, x1: 0, y1: 0, x2: 0, y2: 1,
+                stop: 0 #616161, stop: 0.5 #505050,
+                stop: 0.6 #434343, stop:1 #656565)";
 
 @mixin sign_1_config {
     @include text_1_config();
@@ -137,6 +134,13 @@ $gradient_3: "qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,
     background-color: #{$gradient_3}; 
     border-color: #{scale-color($light_green, $lightness: +0%)};
 }
+
+$gradient_3: "qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                              stop:0 #{$dark_blue}, 
+                              stop:0.25 #{scale-color($dark_blue, $lightness: +10%)},
+                              stop:0.5 #{scale-color($dark_blue, $lightness: +20%)},
+                              stop:0.75 #{scale-color($dark_blue, $lightness: +30%)},
+                              stop:1 #{scale-color($dark_blue, $lightness: +40%)})";
 
 QMainWindow {
     @include window_config();
@@ -176,6 +180,89 @@ QMainWindow {
             
             border-radius: 8px;
         }
+
+        QLineEdit, QPlainTextEdit {
+            background-color: #{scale-color($beige, $lightness: -20%, $saturation: -15%)};
+            color: #{scale-color(black, $lightness: +0%)};
+            selection-background-color: #{scale-color($dark_blue, $lightness: +30%)};
+            
+            border-radius: 4px;
+            border: 2px solid #{scale-color($dark_green, $lightness: +25%)};
+
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+            &:hover, &:focus {
+                background-color: #{scale-color($beige, $lightness: -8%, $saturation: -15%)};   
+            }
+        }
+
+        QDateTimeEdit {
+            background-color: #{scale-color($beige, $lightness: -20%, $saturation: -15%)};
+            color: #{scale-color(black, $lightness: +0%)};
+            selection-background-color: #{scale-color($dark_blue, $lightness: +30%)};
+            
+            border-radius: 4px;
+            border: 2px solid #{scale-color($dark_green, $lightness: +25%)};
+
+            font-size: 10px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+            &:hover, &:focus {
+                background-color: #{scale-color($beige, $lightness: -8%, $saturation: -15%)};   
+            }
+
+            &::up-button{
+                image: url(:/resources/up_button_1.png);
+                &:hover {
+                    margin-bottom: 1px;
+                }
+            }
+            &::down-button{
+                image: url(:/resources/down_button_1.png);
+                &:hover {
+                    margin-top: 1px;
+                }
+            }
+
+            &#creationDateEdit {
+                &::down-button{
+                    image: none;
+                }
+                &::up-button{
+                    image: none;
+                }
+                background-color: #{scale-color($dark_green, $lightness: +10%, $saturation: -15%)};
+            }
+            
+        }
+
+        QCheckBox {
+            background-color: none;
+            border: none;
+            color: #{scale-color($beige, $lightness: -10%)};
+
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            &::indicator {
+                width: 15px;
+                height: 15px;
+                background-color: #{scale-color($beige, $lightness: -20%, $saturation: -15%)};
+                border: 2px solid #{scale-color($dark_green, $lightness: +25%)};
+                border-radius: 3px;
+
+                &:hover, &:focus {
+                    background-color: #{scale-color($beige, $lightness: -8%, $saturation: -15%)};   
+                }
+            }
+
+            &::indicator:checked {
+                image: url(:/resources/check_icon_2.png);
+            }
+
+            &::indicator:unchecked {
+                image: url(:/resources/uncheck_icon_1.png);
+            }
+        }
+
     }
 
     QWidget {
@@ -192,6 +279,61 @@ QMainWindow {
 
             @include label_1_config();
         }
+
+        QTableView {
+            background-color: #{scale-color($beige, $lightness: -20%, $saturation: -15%)};
+            color: #{scale-color(black, $lightness: +0%)};
+
+            gridline-color: #{scale-color($blue, $lightness: +15%, $alpha: -55%)};
+           
+            border-bottom-right-radius: 70px;
+
+            selection-background-color: #{scale-color($dark_blue, $lightness: +30%, $alpha: -25%)};
+            selection-color: #{scale-color($beige, $lightness: +25%)};
+
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        
+            background-attachment: scroll;
+        }
+
+        QScrollBar {
+            &:vertical {
+                background: #{scale-color($light_green, $lightness: +0%)};
+                width: 12px;
+                margin: 20px 0 20px 0;
+            }
+            &::handle:vertical {
+                background: #{scale-color($dark_green, $lightness: +10%)};
+                min-height: 20px;
+            }
+            &::add-line:vertical {
+                background-color: #{scale-color($dark_blue, $lightness: +25%)};
+                border: 2px solid #{scale-color($blue, $lightness: +20%)};
+                height: 20px;
+                subcontrol-position: bottom;
+                subcontrol-origin: margin;
+            }
+            &::sub-line:vertical {
+                background: #{scale-color($dark_blue, $lightness: +25%)};
+                border: 2px solid #{scale-color($blue, $lightness: +20%)};
+                height: 20px;
+                subcontrol-position: top;
+                subcontrol-origin: margin;
+            }
+        }
+
+        QHeaderView {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            font-style: italic;
+
+            &::section {
+                background-color: #{scale-color($dark_blue, $lightness: +12%)};
+                color: #{scale-color($beige, $lightness: +10%)};
+            }
+        }
+
         &#welcomePage{
             QPushButton {
                 max-width: 240px;
@@ -229,6 +371,10 @@ QMainWindow {
                 QPushButton {
                     border-radius: 8px;
                 }
+            }
+
+            QTableView {
+                border-radius: 0px;
             }
 
             QPushButton {
