@@ -49,4 +49,4 @@ namespace GlobalConstants {
 7. When the configuration tasks mentioned above are finished, you can build the project and run it to observe the final result by yourself.
 
 # Project Demo
-![](task_manager_demo.gif)
+![](demo.gif)
