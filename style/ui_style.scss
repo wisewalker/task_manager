@@ -288,10 +288,10 @@ QMainWindow {
             background-color: #{scale-color($beige, $lightness: -20%, $saturation: -15%)};
             color: #{scale-color(black, $lightness: +0%)};
 
-            gridline-color: #{scale-color($blue, $lightness: +15%, $alpha: -55%)};
-           
-            border-bottom-right-radius: 70px;
+            gridline-color:#{scale-color($blue, $lightness: +15%, $alpha: -55%)};
 
+            border-bottom-right-radius: 70px;
+            
             selection-background-color: #{scale-color($dark_blue, $lightness: +30%, $alpha: -25%)};
             selection-color: #{scale-color($beige, $lightness: +25%)};
 

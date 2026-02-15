@@ -17,7 +17,7 @@ void TaskForm::configureInterfaceStructure()
 
     m_titleEdit = new QLineEdit(this);
     m_titleEdit->setObjectName("titleEdit");
-    m_descriptionEdit = new QTextEdit(this);
+    m_descriptionEdit = new QPlainTextEdit(this);
     m_descriptionEdit->setObjectName("descriptionEdit");
     m_deadlineSetButton = new QCheckBox("Set Deadline", this);
     m_deadlineSetButton->setObjectName("deadlineCheckBox");

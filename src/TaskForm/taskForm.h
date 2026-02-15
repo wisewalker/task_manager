@@ -5,7 +5,7 @@
 
 #include <QLabel>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QDateTimeEdit>
 
 #include <QPushButton>
@@ -27,7 +27,7 @@ private:
     QVBoxLayout *m_mainLayout = nullptr;
 
     QLineEdit *m_titleEdit = nullptr;
-    QTextEdit *m_descriptionEdit = nullptr;
+    QPlainTextEdit *m_descriptionEdit = nullptr;
     QCheckBox *m_deadlineSetButton = nullptr;
     QDateTimeEdit *m_deadlineEdit = nullptr;
     
