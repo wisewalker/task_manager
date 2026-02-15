@@ -32,6 +32,8 @@ git clone git@github.com:wisewalker/task_manager.git
 5. Then create new PostgreSQL database. You can achieve it by using terminal client `psql`, like in the following example:
 ```markdown
 psql -d *existing database name* -U *user name*
+```
+```sql
 CREATE DATABASE *your database name*;
 ```
 
@@ -47,6 +49,16 @@ namespace GlobalConstants {
 }
 ```
 7. When the configuration tasks mentioned above are finished, you can build the project and run it to observe the final result by yourself.
+
+# Project Images
+**Welcome Page**
+![Welcome Page](example_images/task_manager_1.png)
+**Tasks Management Page**
+![Tasks Management Page](example_images/task_manager_2.png)
+**Tasks Observer**
+![Tasks Observer](example_images/task_manager_3.png)
+**New Task Form**
+![New Task Form](example_images/task_manager_4.png)
 
 # Project Demo
 ![](demo.gif)
