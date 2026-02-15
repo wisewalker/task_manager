@@ -153,6 +153,9 @@ void WelcomePage::configureFunctionality()
     //Configure view of reaching deadline tasks
     m_reachingDeadlineTasksModel->setSourceModel(m_sourceModel);
     m_reachingDeadlineTasksModel->sort(3, Qt::AscendingOrder);
+    //Configure filtering the no-dealine tasks output
+    m_reachingDeadlineTasksModel->setFilterRegularExpression(QRegularExpression(".+"));
+    m_reachingDeadlineTasksModel->setFilterKeyColumn(3);
 
     m_reachingDeadlineTasksView->setModel(m_reachingDeadlineTasksModel);
     m_reachingDeadlineTasksView->setItemDelegate(new TasksTableDelegate(this));
