@@ -48,5 +48,15 @@ namespace GlobalConstants {
 ```
 7. When the configuration tasks mentioned above are finished, you can build the project and run it to observe the final result by yourself.
 
+# Project Images
+**Welcome Page**
+![Welcome Page](example_images/task_manager_1.png)
+**Tasks Management Page**
+![Tasks Management Page](example_images/task_manager_2.png)
+**Tasks Observer**
+![Tasks Observer](example_images/task_manager_3.png)
+**New Task Form**
+![New Task Form](example_images/task_manager_4.png)
+
 # Project Demo
 ![](demo.gif)
